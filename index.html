@@ -1,1670 +1,286 @@
 <!DOCTYPE html>
-<html lang="ru" class="scroll-smooth">
+<html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ru-Ka — Ресторан аутентичной грузинской кухни</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
-  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            parchment: '#FAF6F0',
-            sand: '#F2EAE0',
-            clay: '#B2563A',
-            saperavi: '#6E1E2B',
-            'saperavi-dark': '#52141F',
-            amberleaf: '#C59648',
-            espresso: '#1B1613',
-            charcoal: '#2A221E',
-            muted: '#6B5E56',
-          },
-          fontFamily: {
-            serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
-            sans: ['Inter', 'system-ui', 'sans-serif'],
-          },
-        },
-      },
-    };
-  </script>
-  <style>
-    body {
-      background-color: #FAF6F0;
-      color: #231D1A;
-      font-family: 'Inter', system-ui, sans-serif;
-    }
-    .font-display {
-      font-family: 'Cormorant Garamond', Georgia, serif;
-    }
-    .ornament-line {
-      background-image: repeating-linear-gradient(
-        90deg,
-        rgba(197, 150, 72, 0.55) 0px,
-        rgba(197, 150, 72, 0.55) 6px,
-        transparent 6px,
-        transparent 10px
-      );
-      height: 1px;
-    }
-    .hero-overlay {
-      background: linear-gradient(
-        180deg,
-        rgba(27, 22, 19, 0.72) 0%,
-        rgba(27, 22, 19, 0.52) 45%,
-        rgba(27, 22, 19, 0.88) 100%
-      );
-    }
-    .card-lift {
-      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
-    }
-    .card-lift:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 14px 32px -12px rgba(27, 22, 19, 0.14);
-    }
-    .placeholder-pattern {
-      background-color: #EFE6DA;
-      background-image: radial-gradient(rgba(110, 30, 43, 0.08) 1px, transparent 1px);
-      background-size: 16px 16px;
-    }
-    .no-scrollbar::-webkit-scrollbar {
-      display: none;
-    }
-    .no-scrollbar {
-      -ms-overflow-style: none;
-      scrollbar-width: none;
-    }
-  </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ru-Ka — Ресторан грузинской кухни в Саратове (Демо-версия)</title>
+  <meta name="description" content="Демонстрационная версия сайта ресторана грузинской кухни Ru-Ka в Саратове.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&family=Onest:wght@500;600;700;800&display=swap&subset=cyrillic" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
 </head>
-<body class="antialiased selection:bg-saperavi selection:text-parchment">
+<body>
+  <!-- Обязательная пометка демо-версии -->
+  <div class="demo-banner" id="demoBanner" role="status">
+    Демонстрационная версия сайта. Не предназначена для эксплуатации.
+  </div>
 
-  <!-- Sticky Navigation -->
-  <header class="sticky top-0 z-40 bg-espresso/95 backdrop-blur-md border-b border-amberleaf/20 text-parchment">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-3">
-      <a href="#top" class="flex items-center gap-3 shrink-0 group">
-        <span class="w-9 h-9 rounded-full border border-amberleaf/60 flex items-center justify-center text-amberleaf font-display text-lg font-semibold tracking-wider group-hover:bg-amberleaf/10 transition">
-          R
-        </span>
-        <div class="leading-tight">
-          <span class="block font-display text-2xl font-semibold tracking-wide text-parchment">Ru-Ka</span>
-          <span class="block text-[10px] uppercase tracking-[0.22em] text-amberleaf/80">Грузинская кухня</span>
-        </div>
+  <!-- Баннер объявлений (автоматически скрыт, если отключён в data.json) -->
+  <div class="announcement-bar" id="announcementBar" hidden></div>
+
+  <!-- Шапка -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="#top" class="brand" aria-label="Ru-Ka — на главную">
+        <span class="brand-name" id="brandName">Ru-Ka</span>
+        <span class="brand-sub" id="brandSub">Ресторан грузинской кухни</span>
       </a>
 
-      <nav class="hidden md:flex items-center gap-7 text-sm text-parchment/80">
-        <a href="#about" class="hover:text-amberleaf transition">О ресторане</a>
-        <a href="#menu" class="hover:text-amberleaf transition">Меню</a>
-        <a href="#gallery" class="hover:text-amberleaf transition">Галерея</a>
-        <a href="#contacts" class="hover:text-amberleaf transition">Контакты</a>
+      <nav class="nav-desktop" aria-label="Основная навигация">
+        <a class="nav-link" href="#about">О ресторане</a>
+        <a class="nav-link" href="#menu">Меню</a>
+        <a class="nav-link" href="#reviews">Отзывы</a>
+        <a class="nav-link" href="#contacts">Контакты</a>
       </nav>
 
-      <div class="flex items-center gap-2 sm:gap-3">
-        <button
-          id="openSelectionBtn"
-          type="button"
-          class="relative inline-flex items-center gap-2 px-3.5 py-2 rounded-full border border-amberleaf/40 bg-white/5 hover:bg-white/10 text-xs sm:text-sm font-medium text-parchment transition"
-          aria-label="Открыть ваш выбор блюд"
-        >
-          <svg class="w-4 h-4 text-amberleaf" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/>
-            <path d="M3 6h18"/>
-            <path d="M16 10a4 4 0 0 1-8 0"/>
-          </svg>
-          <span class="hidden sm:inline">Ваш выбор</span>
-          <span id="headerCartBadge" class="inline-flex items-center justify-center min-w-[20px] h-5 px-1.5 rounded-full bg-saperavi text-parchment text-xs font-semibold">0</span>
-        </button>
-
-        <button
-          id="openBookingBtn"
-          type="button"
-          class="hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-full bg-saperavi hover:bg-saperavi-dark text-parchment text-sm font-medium transition shadow-sm"
-        >
-          Бронь стола
-        </button>
-
-        <button
-          id="mobileMenuBtn"
-          type="button"
-          class="md:hidden inline-flex items-center justify-center w-10 h-10 rounded-full border border-white/15 hover:bg-white/10 transition"
-          aria-label="Открыть меню навигации"
-        >
-          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="4" x2="20" y1="7" y2="7"/>
-            <line x1="4" x2="20" y1="12" y2="12"/>
-            <line x1="4" x2="20" y1="17" y2="17"/>
+      <div class="header-actions">
+        <a class="btn btn-primary btn-sm" href="#booking">Забронировать</a>
+        <button class="burger-btn" id="burgerBtn" type="button" aria-label="Открыть меню" aria-expanded="false" aria-controls="mobileMenu">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
           </svg>
         </button>
       </div>
-    </div>
-
-    <!-- Mobile Nav Dropdown -->
-    <div id="mobileNav" class="hidden md:hidden border-t border-white/10 bg-espresso px-4 py-4 space-y-3 text-sm">
-      <a href="#about" class="mobile-nav-link block py-1.5 text-parchment/85 hover:text-amberleaf">О ресторане</a>
-      <a href="#menu" class="mobile-nav-link block py-1.5 text-parchment/85 hover:text-amberleaf">Меню</a>
-      <a href="#gallery" class="mobile-nav-link block py-1.5 text-parchment/85 hover:text-amberleaf">Галерея</a>
-      <a href="#contacts" class="mobile-nav-link block py-1.5 text-parchment/85 hover:text-amberleaf">Контакты</a>
-      <button
-        id="mobileBookingBtn"
-        type="button"
-        class="w-full mt-2 py-2.5 rounded-full bg-saperavi hover:bg-saperavi-dark text-parchment font-medium transition"
-      >
-        Забронировать стол
-      </button>
     </div>
   </header>
 
-  <!-- Hero Section -->
-  <section id="top" class="relative min-h-[78vh] flex flex-col justify-between overflow-hidden bg-espresso text-parchment">
-    <img
-      src="images/1.webp"
-      alt="Интерьер ресторана грузинской кухни Ru-Ka"
-      class="absolute inset-0 w-full h-full object-cover object-center scale-[1.01]"
-    />
-    <div class="hero-overlay absolute inset-0"></div>
-
-    <div class="relative z-10 max-w-6xl mx-auto w-full px-4 sm:px-6 pt-20 sm:pt-28 pb-12 flex-1 flex flex-col justify-center">
-      <div class="max-w-2xl">
-        <div class="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-espresso/70 border border-amberleaf/40 text-amberleaf text-xs uppercase tracking-[0.2em] mb-6 backdrop-blur-sm">
-          <span>Традиционные рецепты</span>
-        </div>
-
-        <h1 class="font-display text-5xl sm:text-7xl font-semibold tracking-tight leading-[1.03] text-parchment mb-5">
-          Ресторан <span class="text-amberleaf italic">Ru-Ka</span>
-        </h1>
-
-        <p class="text-base sm:text-lg text-parchment/90 leading-relaxed max-w-xl mb-8 font-light">
-          Аутентичная грузинская кухня, приготовленная по традиционным рецептам. Хачапури, хинкали, лаваш, лобио, харчо, чашушули, а также домашнее вино и мацони.
-        </p>
-
-        <div class="flex flex-wrap items-center gap-3.5">
-          <a
-            href="#menu"
-            class="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-full bg-saperavi hover:bg-saperavi-dark text-parchment text-sm font-medium transition shadow-lg"
-          >
-            <span>Открыть меню</span>
-            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M5 12h14"/>
-              <path d="m12 5 7 7-7 7"/>
-            </svg>
-          </a>
-          <button
-            id="heroBookingBtn"
-            type="button"
-            class="inline-flex items-center gap-2 px-6 py-3.5 rounded-full border border-parchment/40 bg-espresso/50 hover:bg-espresso/80 text-parchment text-sm font-medium backdrop-blur-sm transition"
-          >
-            Забронировать стол
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Bottom Info Strip -->
-    <div class="relative z-10 border-t border-white/15 bg-espresso/80 backdrop-blur-md">
-      <div class="max-w-6xl mx-auto px-4 sm:px-6 py-4 grid grid-cols-2 lg:grid-cols-4 gap-4 text-xs sm:text-sm">
-        <div>
-          <span class="block text-[11px] uppercase tracking-widest text-amberleaf/80 mb-0.5">Кухня</span>
-          <span class="font-medium text-parchment">Грузинская, традиционная</span>
-        </div>
-        <div>
-          <span class="block text-[11px] uppercase tracking-widest text-amberleaf/80 mb-0.5">Часы работы</span>
-          <span class="font-medium text-parchment">НД</span>
-        </div>
-        <div>
-          <span class="block text-[11px] uppercase tracking-widest text-amberleaf/80 mb-0.5">Адрес</span>
-          <span class="font-medium text-parchment">НД</span>
-        </div>
-        <div>
-          <span class="block text-[11px] uppercase tracking-widest text-amberleaf/80 mb-0.5">Средний чек</span>
-          <span class="font-medium text-parchment">НД</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- About Section -->
-  <section id="about" class="py-16 sm:py-24 px-4 sm:px-6">
-    <div class="max-w-6xl mx-auto">
-      <div class="grid lg:grid-cols-12 gap-10 lg:gap-12 items-center">
-        <div class="lg:col-span-6 space-y-6">
-          <div class="inline-flex items-center gap-3 text-xs uppercase tracking-[0.22em] text-clay font-semibold">
-            <span class="w-8 h-px bg-clay"></span>
-            <span>О ресторане</span>
-          </div>
-          <h2 class="font-display text-4xl sm:text-5xl font-semibold text-espresso leading-tight">
-            Вкус настоящей Грузии за одним столом
-          </h2>
-          <p class="text-base text-charcoal/85 leading-relaxed">
-            Ресторан Ru-Ka предлагает своим гостям аутентичную грузинскую кухню, приготовленную по традиционным рецептам.
-          </p>
-          <p class="text-base text-muted leading-relaxed">
-            В меню представлены такие блюда, как хачапури, хинкали, лаваш, лобио, харчо, чашушули и другие. Кроме того, гости могут попробовать домашнее вино и мацони.
-          </p>
-
-          <!-- Factual Summary Grid (strictly ND for unknown fields) -->
-          <div class="grid grid-cols-2 sm:grid-cols-3 gap-3.5 pt-2">
-            <div class="p-4 rounded-2xl bg-sand/80 border border-espresso/10">
-              <span class="block text-[11px] uppercase tracking-wider text-muted mb-1">Шеф-повар</span>
-              <span class="font-display text-2xl font-semibold text-espresso">НД</span>
-            </div>
-            <div class="p-4 rounded-2xl bg-sand/80 border border-espresso/10">
-              <span class="block text-[11px] uppercase tracking-wider text-muted mb-1">Посадочных мест</span>
-              <span class="font-display text-2xl font-semibold text-espresso">НД</span>
-            </div>
-            <div class="p-4 rounded-2xl bg-sand/80 border border-espresso/10 col-span-2 sm:col-span-1">
-              <span class="block text-[11px] uppercase tracking-wider text-muted mb-1">Год открытия</span>
-              <span class="font-display text-2xl font-semibold text-espresso">НД</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="lg:col-span-6 grid grid-cols-2 gap-4">
-          <div class="col-span-2 rounded-3xl overflow-hidden shadow-md border border-espresso/10 aspect-[16/10] bg-sand">
-            <img
-              src="images/3.webp"
-              alt="Чашушули в ресторане Ru-Ka"
-              class="w-full h-full object-cover"
-            />
-          </div>
-          <div class="rounded-2xl p-5 bg-espresso text-parchment flex flex-col justify-between">
-            <span class="text-xs uppercase tracking-[0.2em] text-amberleaf">Напитки</span>
-            <p class="font-display text-2xl leading-snug mt-3">Домашнее вино и мацони</p>
-            <span class="text-xs text-parchment/60 mt-3">Карта вин и объёмы: НД</span>
-          </div>
-          <div class="rounded-2xl overflow-hidden border border-espresso/10 aspect-[4/3] bg-sand">
-            <img
-              src="images/2.webp"
-              alt="Подача десерта в ресторане Ru-Ka"
-              class="w-full h-full object-cover"
-            />
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Ornament Divider -->
-  <div class="max-w-6xl mx-auto px-4 sm:px-6">
-    <div class="ornament-line w-full"></div>
+  <!-- Мобильная навигация -->
+  <div class="mobile-menu" id="mobileMenu" hidden>
+    <nav class="mobile-nav" aria-label="Мобильная навигация">
+      <a class="nav-link" href="#about">О ресторане</a>
+      <a class="nav-link" href="#menu">Меню</a>
+      <a class="nav-link" href="#reviews">Отзывы</a>
+      <a class="nav-link" href="#booking">Бронирование</a>
+      <a class="nav-link" href="#contacts">Контакты</a>
+    </nav>
   </div>
 
-  <!-- Interactive Menu Section -->
-  <section id="menu" class="py-16 sm:py-24 px-4 sm:px-6">
-    <div class="max-w-6xl mx-auto">
-      <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
-        <div>
-          <div class="inline-flex items-center gap-3 text-xs uppercase tracking-[0.22em] text-clay font-semibold mb-3">
-            <span class="w-8 h-px bg-clay"></span>
-            <span>Интерактивное меню</span>
-          </div>
-          <h2 class="font-display text-4xl sm:text-5xl font-semibold text-espresso leading-tight">
-            Блюда и напитки Ru-Ka
-          </h2>
-          <p class="text-sm text-muted mt-2 max-w-xl">
-            Фильтруйте по категориям, сохраняйте понравившиеся позиции в избранное или собирайте предварительный выбор к столику. Цены, граммовки и отсутствующие фото указаны как «НД».
-          </p>
-        </div>
-
-        <!-- View Mode Toggle -->
-        <div class="inline-flex items-center p-1 rounded-full bg-sand border border-espresso/10 self-start md:self-auto">
-          <button
-            id="viewGridBtn"
-            type="button"
-            class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-medium transition bg-espresso text-parchment"
-          >
-            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <rect x="3" y="3" width="7" height="7" rx="1"/>
-              <rect x="14" y="3" width="7" height="7" rx="1"/>
-              <rect x="3" y="14" width="7" height="7" rx="1"/>
-              <rect x="14" y="14" width="7" height="7" rx="1"/>
-            </svg>
-            <span>Карточки</span>
-          </button>
-          <button
-            id="viewListBtn"
-            type="button"
-            class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-medium transition text-muted hover:text-espresso"
-          >
-            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <line x1="8" y1="6" x2="21" y2="6"/>
-              <line x1="8" y1="12" x2="21" y2="12"/>
-              <line x1="8" y1="18" x2="21" y2="18"/>
-              <line x1="3" y1="6" x2="3.01" y2="6"/>
-              <line x1="3" y1="12" x2="3.01" y2="12"/>
-              <line x1="3" y1="18" x2="3.01" y2="18"/>
-            </svg>
-            <span>Список</span>
-          </button>
-        </div>
-      </div>
-
-      <!-- Controls Bar: Category Tabs + Search -->
-      <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-8">
-        <div id="categoryTabs" class="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1" role="tablist" aria-label="Категории меню">
-          <!-- Rendered by JS -->
-        </div>
-
-        <div class="relative w-full lg:w-72 shrink-0">
-          <svg class="w-4 h-4 text-muted absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="11" cy="11" r="8"/>
-            <path d="m21 21-4.3-4.3"/>
-          </svg>
-          <input
-            id="menuSearchInput"
-            type="text"
-            placeholder="Поиск по меню..."
-            class="w-full pl-10 pr-9 py-2.5 rounded-full bg-white border border-espresso/15 text-sm text-espresso placeholder:text-muted/70 focus:outline-none focus:border-saperavi focus:ring-2 focus:ring-saperavi/15 transition"
-          />
-          <button
-            id="clearSearchBtn"
-            type="button"
-            class="hidden absolute right-2.5 top-1/2 -translate-y-1/2 w-6 h-6 rounded-full items-center justify-center text-muted hover:text-espresso hover:bg-sand transition"
-            aria-label="Очистить поиск"
-          >
-            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M18 6 6 18"/><path d="m6 6 12 12"/>
-            </svg>
-          </button>
-        </div>
-      </div>
-
-      <!-- Menu Items Container -->
-      <div id="menuContainer" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        <!-- Rendered by JS -->
-      </div>
-
-      <!-- Empty State -->
-      <div id="menuEmptyState" class="hidden text-center py-14 px-6 rounded-3xl bg-sand/70 border border-espresso/10">
-        <p class="font-display text-2xl text-espresso mb-2">Ничего не найдено</p>
-        <p class="text-sm text-muted mb-5">Попробуйте изменить запрос или сбросить выбранную категорию.</p>
-        <button
-          id="resetFiltersBtn"
-          type="button"
-          class="px-5 py-2.5 rounded-full bg-espresso text-parchment text-sm font-medium hover:bg-charcoal transition"
-        >
-          Показать всё меню
-        </button>
-      </div>
-
-      <!-- Other dishes note -->
-      <div class="mt-10 p-5 sm:p-6 rounded-2xl bg-sand/80 border border-espresso/10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div>
-          <p class="text-sm font-medium text-espresso">В меню также представлены и другие блюда грузинской кухни</p>
-          <p class="text-xs text-muted mt-1">Полный перечень дополнительных позиций, сезонных предложений, цен и КБЖУ: <strong class="text-espresso">НД</strong></p>
-        </div>
-        <button
-          id="openSelectionFromNoteBtn"
-          type="button"
-          class="shrink-0 inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-full border border-saperavi text-saperavi hover:bg-saperavi hover:text-parchment text-xs font-medium transition"
-        >
-          Посмотреть ваш выбор
-        </button>
-      </div>
-    </div>
-  </section>
-
-  <!-- Gallery Section (Real Restaurant Photos) -->
-  <section id="gallery" class="py-16 sm:py-24 px-4 sm:px-6 bg-espresso text-parchment">
-    <div class="max-w-6xl mx-auto">
-      <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10">
-        <div>
-          <div class="inline-flex items-center gap-3 text-xs uppercase tracking-[0.22em] text-amberleaf font-semibold mb-3">
-            <span class="w-8 h-px bg-amberleaf"></span>
-            <span>Атмосфера и подача</span>
-          </div>
-          <h2 class="font-display text-4xl sm:text-5xl font-semibold text-parchment leading-tight">
-            Фотографии ресторана
-          </h2>
-        </div>
-        <p class="text-sm text-parchment/65 max-w-sm">
-          Нажмите на любую фотографию, чтобы рассмотреть её в полном размере.
-        </p>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
-        <button
-          type="button"
-          data-lightbox-index="0"
-          class="gallery-trigger group relative rounded-3xl overflow-hidden aspect-[4/3] bg-charcoal text-left focus:outline-none focus:ring-2 focus:ring-amberleaf"
-        >
-          <img
-            src="images/1.webp"
-            alt="Интерьер зала ресторана Ru-Ka"
-            class="w-full h-full object-cover group-hover:scale-105 transition duration-500"
-          />
-          <div class="absolute inset-0 bg-gradient-to-t from-espresso/80 via-transparent to-transparent"></div>
-          <div class="absolute bottom-4 left-4 right-4 flex items-end justify-between">
+  <main id="top">
+    <!-- Hero: Bento-сетка -->
+    <section class="hero-section">
+      <div class="container">
+        <div class="bento-hero">
+          <div class="bento-card bento-intro reveal">
             <div>
-              <span class="block text-[11px] uppercase tracking-widest text-amberleaf">Зал</span>
-              <span class="font-display text-xl text-parchment">Интерьер Ru-Ka</span>
+              <span class="hero-badge" id="heroBadge">Грузинская кухня в Саратове</span>
+              <h1 class="hero-title" id="heroTitle">Ru-Ka — тепло грузинского застолья</h1>
+              <p class="hero-lead" id="heroLead">Ресторан Ru-Ka предлагает своим гостям аутентичную грузинскую кухню, приготовленную по традиционным рецептам.</p>
             </div>
-            <span class="w-8 h-8 rounded-full bg-white/15 backdrop-blur-sm flex items-center justify-center text-parchment">
-              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M15 3h6v6"/><path d="M9 21H3v-6"/><path d="M21 3l-7 7"/><path d="M3 21l7-7"/>
-              </svg>
-            </span>
+            <div class="hero-cta-row">
+              <a class="btn btn-primary" href="#booking">Забронировать стол</a>
+              <a class="btn btn-secondary" href="#menu">Смотреть меню</a>
+            </div>
           </div>
-        </button>
 
-        <button
-          type="button"
-          data-lightbox-index="1"
-          class="gallery-trigger group relative rounded-3xl overflow-hidden aspect-[4/3] bg-charcoal text-left focus:outline-none focus:ring-2 focus:ring-amberleaf"
-        >
-          <img
-            src="images/3.webp"
-            alt="Чашушули в ресторане Ru-Ka"
-            class="w-full h-full object-cover group-hover:scale-105 transition duration-500"
-          />
-          <div class="absolute inset-0 bg-gradient-to-t from-espresso/80 via-transparent to-transparent"></div>
-          <div class="absolute bottom-4 left-4 right-4 flex items-end justify-between">
+          <div class="bento-card bento-photo-main reveal">
+            <img id="heroMainImg" src="ru-ka-images/images/1.webp" alt="Интерьер ресторана грузинской кухни Ru-Ka">
+            <span class="photo-caption-pill">Большая Затонская ул., 97</span>
+          </div>
+
+          <div class="bento-card bento-rating reveal">
+            <div class="rating-source" id="heroRatingSource">Яндекс Карты</div>
+            <div class="rating-big" id="heroRatingValue">4.5</div>
+            <div class="rating-details" id="heroRatingDetails">46 оценок · атмосфера 100%</div>
+          </div>
+
+          <div class="bento-card bento-quick-info reveal">
             <div>
-              <span class="block text-[11px] uppercase tracking-widest text-amberleaf">Горячее</span>
-              <span class="font-display text-xl text-parchment">Чашушули</span>
-            </div>
-            <span class="w-8 h-8 rounded-full bg-white/15 backdrop-blur-sm flex items-center justify-center text-parchment">
-              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M15 3h6v6"/><path d="M9 21H3v-6"/><path d="M21 3l-7 7"/><path d="M3 21l7-7"/>
-              </svg>
-            </span>
-          </div>
-        </button>
-
-        <button
-          type="button"
-          data-lightbox-index="2"
-          class="gallery-trigger group relative rounded-3xl overflow-hidden aspect-[4/3] bg-charcoal text-left focus:outline-none focus:ring-2 focus:ring-amberleaf"
-        >
-          <img
-            src="images/2.webp"
-            alt="Десерт в ресторане Ru-Ka"
-            class="w-full h-full object-cover group-hover:scale-105 transition duration-500"
-          />
-          <div class="absolute inset-0 bg-gradient-to-t from-espresso/80 via-transparent to-transparent"></div>
-          <div class="absolute bottom-4 left-4 right-4 flex items-end justify-between">
-            <div>
-              <span class="block text-[11px] uppercase tracking-widest text-amberleaf">Подача</span>
-              <span class="font-display text-xl text-parchment">Десерт · НД</span>
-            </div>
-            <span class="w-8 h-8 rounded-full bg-white/15 backdrop-blur-sm flex items-center justify-center text-parchment">
-              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M15 3h6v6"/><path d="M9 21H3v-6"/><path d="M21 3l-7 7"/><path d="M3 21l7-7"/>
-              </svg>
-            </span>
-          </div>
-        </button>
-      </div>
-    </div>
-  </section>
-
-  <!-- Contacts & Booking CTA Section -->
-  <section id="contacts" class="py-16 sm:py-24 px-4 sm:px-6">
-    <div class="max-w-6xl mx-auto">
-      <div class="grid lg:grid-cols-12 gap-8 items-stretch">
-        <div class="lg:col-span-7 bg-white rounded-3xl p-6 sm:p-10 border border-espresso/10 shadow-sm">
-          <div class="inline-flex items-center gap-3 text-xs uppercase tracking-[0.22em] text-clay font-semibold mb-3">
-            <span class="w-8 h-px bg-clay"></span>
-            <span>Контакты и визитная карточка</span>
-          </div>
-          <h2 class="font-display text-4xl font-semibold text-espresso mb-6">Как нас найти</h2>
-
-          <div class="grid sm:grid-cols-2 gap-5 text-sm">
-            <div class="p-4 rounded-2xl bg-parchment border border-espresso/8">
-              <span class="block text-xs uppercase tracking-wider text-muted mb-1">Адрес</span>
-              <span class="font-medium text-espresso text-base">НД</span>
-            </div>
-            <div class="p-4 rounded-2xl bg-parchment border border-espresso/8">
-              <span class="block text-xs uppercase tracking-wider text-muted mb-1">Телефон</span>
-              <span class="font-medium text-espresso text-base">НД</span>
-            </div>
-            <div class="p-4 rounded-2xl bg-parchment border border-espresso/8">
-              <span class="block text-xs uppercase tracking-wider text-muted mb-1">Часы работы</span>
-              <span class="font-medium text-espresso text-base">НД</span>
-            </div>
-            <div class="p-4 rounded-2xl bg-parchment border border-espresso/8">
-              <span class="block text-xs uppercase tracking-wider text-muted mb-1">E-mail</span>
-              <span class="font-medium text-espresso text-base">НД</span>
-            </div>
-            <div class="p-4 rounded-2xl bg-parchment border border-espresso/8">
-              <span class="block text-xs uppercase tracking-wider text-muted mb-1">Социальные сети</span>
-              <span class="font-medium text-espresso text-base">НД</span>
-            </div>
-            <div class="p-4 rounded-2xl bg-parchment border border-espresso/8">
-              <span class="block text-xs uppercase tracking-wider text-muted mb-1">Парковка / Доставка</span>
-              <span class="font-medium text-espresso text-base">НД</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="lg:col-span-5 rounded-3xl bg-saperavi text-parchment p-6 sm:p-10 flex flex-col justify-between relative overflow-hidden">
-          <div class="relative z-10">
-            <span class="inline-block text-xs uppercase tracking-[0.22em] text-amberleaf mb-3">Бронирование</span>
-            <h3 class="font-display text-4xl font-semibold leading-tight mb-4">
-              Забронируйте столик в Ru-Ka
-            </h3>
-            <p class="text-sm text-parchment/85 leading-relaxed mb-6">
-              Оставьте заявку на удобную дату и при желании прикрепите блюда, выбранные в интерактивном меню.
-            </p>
-            <div class="space-y-2 text-xs text-parchment/75 border-t border-white/15 pt-4 mb-8">
-              <div class="flex justify-between">
-                <span>Депозит при бронировании</span>
-                <span class="font-medium text-parchment">НД</span>
-              </div>
-              <div class="flex justify-between">
-                <span>Банкетный зал</span>
-                <span class="font-medium text-parchment">НД</span>
+              <div class="quick-info-label">Телефон</div>
+              <div class="quick-info-value">
+                <a class="quick-info-phone" id="heroPhone" href="tel:+78452469494">+7 (8452) 46-94-94</a>
               </div>
             </div>
+            <div>
+              <div class="quick-info-label">Часы работы</div>
+              <div class="quick-info-value" id="heroHours">Н/Д</div>
+            </div>
           </div>
-
-          <button
-            id="contactsBookingBtn"
-            type="button"
-            class="relative z-10 w-full py-3.5 px-6 rounded-full bg-parchment text-espresso hover:bg-sand font-medium text-sm transition shadow-md"
-          >
-            Оставить заявку на бронь
-          </button>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- Footer -->
-  <footer class="bg-espresso text-parchment/75 border-t border-white/10 py-10 px-4 sm:px-6 text-sm">
-    <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-      <div>
-        <span class="font-display text-2xl font-semibold text-parchment">Ru-Ka</span>
-        <p class="text-xs text-parchment/55 mt-1">Аутентичная грузинская кухня по традиционным рецептам · Юридическая информация: НД</p>
+    <!-- О ресторане и фотогалерея -->
+    <section class="section" id="about">
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="section-eyebrow">О заведении</span>
+          <h2 class="section-title" id="aboutTitle">Традиции и атмосфера</h2>
+        </div>
+
+        <div class="about-grid">
+          <div class="about-text-card reveal">
+            <div id="aboutParagraphs"></div>
+            <div class="highlights-row" id="aboutHighlights"></div>
+          </div>
+
+          <div class="gallery-grid reveal" id="aboutGallery"></div>
+        </div>
       </div>
-      <div class="flex flex-wrap items-center gap-5 text-xs">
-        <a href="#about" class="hover:text-amberleaf transition">О ресторане</a>
-        <a href="#menu" class="hover:text-amberleaf transition">Меню</a>
-        <a href="#gallery" class="hover:text-amberleaf transition">Галерея</a>
-        <a href="#contacts" class="hover:text-amberleaf transition">Контакты</a>
+    </section>
+
+    <!-- Секция акций (автоматически скрыта, если нет активных акций) -->
+    <section class="section promotions-section" id="promotions" hidden>
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="section-eyebrow">Спецпредложения</span>
+          <h2 class="section-title">Акции и скидки</h2>
+        </div>
+        <div class="promotions-grid" id="promotionsGrid"></div>
       </div>
+    </section>
+
+    <!-- Секция Меню -->
+    <section class="section" id="menu">
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="section-eyebrow">Кухня</span>
+          <h2 class="section-title">Меню</h2>
+        </div>
+
+        <div id="menuContainer" class="reveal"></div>
+      </div>
+    </section>
+
+    <!-- Отзывы гостей -->
+    <section class="section" id="reviews">
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="section-eyebrow">Мнения гостей</span>
+          <h2 class="section-title">Отзывы на картах</h2>
+        </div>
+
+        <div class="reviews-card reveal">
+          <div class="tabs-list" id="reviewTabs" role="tablist" aria-label="Источники отзывов"></div>
+          <div id="reviewPanel" role="tabpanel"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Бронирование стола (демо-заглушка) -->
+    <section class="section" id="booking">
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="section-eyebrow">Визит в ресторан</span>
+          <h2 class="section-title">Бронирование столика</h2>
+        </div>
+
+        <div class="booking-grid reveal">
+          <div class="booking-info-card">
+            <div>
+              <h3>Ждём вас в Ru-Ka</h3>
+              <p>Выберите удобную дату, время и количество гостей. В демонстрационной версии форма проверяет заполнение и показывает предпросмотр заявки без отправки.</p>
+            </div>
+            <div>
+              <div class="highlight-label">Телефон для связи</div>
+              <a class="contact-value" id="bookingPhone" href="tel:+78452469494">+7 (8452) 46-94-94</a>
+            </div>
+          </div>
+
+          <div class="booking-form-card">
+            <form id="bookingForm" novalidate>
+              <div class="form-grid">
+                <div class="form-field">
+                  <label for="bookingDate">Дата *</label>
+                  <input type="date" id="bookingDate" name="date" required>
+                </div>
+
+                <div class="form-field">
+                  <label for="bookingTime">Время *</label>
+                  <input type="time" id="bookingTime" name="time" required>
+                </div>
+
+                <div class="form-field">
+                  <label for="bookingGuests">Количество гостей *</label>
+                  <select id="bookingGuests" name="guests" required>
+                    <option value="">Выберите...</option>
+                    <option value="1">1 гость</option>
+                    <option value="2">2 гостя</option>
+                    <option value="3">3 гостя</option>
+                    <option value="4">4 гостя</option>
+                    <option value="5">5 гостей</option>
+                    <option value="6">6 гостей</option>
+                    <option value="7-10">7–10 гостей</option>
+                    <option value="10+">Более 10 гостей</option>
+                  </select>
+                </div>
+
+                <div class="form-field">
+                  <label for="bookingName">Ваше имя *</label>
+                  <input type="text" id="bookingName" name="name" placeholder="Например, Алексей" required>
+                </div>
+
+                <div class="form-field form-field-full">
+                  <label for="bookingComment">Комментарий</label>
+                  <textarea id="bookingComment" name="comment" placeholder="Пожелания по столику или повод визита"></textarea>
+                </div>
+              </div>
+
+              <div class="form-footer">
+                <div class="form-error" id="bookingError" role="alert"></div>
+                <button class="btn btn-primary" type="submit">Отправить заявку (демо)</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Контакты -->
+    <section class="section" id="contacts">
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="section-eyebrow">Как добраться</span>
+          <h2 class="section-title">Контакты</h2>
+        </div>
+
+        <div class="contacts-grid reveal">
+          <div class="contact-card">
+            <span class="contact-label">Адрес</span>
+            <span class="contact-value" id="contactAddress">г. Саратов, Большая Затонская улица, 97</span>
+            <span class="contact-note" id="contactAddressNote">На 2ГИС также указан адрес: Большая Затонская ул., 97а</span>
+          </div>
+
+          <div class="contact-card">
+            <span class="contact-label">Телефон</span>
+            <a class="contact-value" id="contactPhone" href="tel:+78452469494">+7 (8452) 46-94-94</a>
+            <span class="contact-note">E-mail: <span id="contactEmail">Н/Д</span></span>
+          </div>
+
+          <div class="contact-card">
+            <span class="contact-label">График работы</span>
+            <span class="contact-value" id="contactHours">Н/Д</span>
+            <span class="contact-note">Уточняйте актуальное время работы по телефону</span>
+          </div>
+        </div>
+
+        <div class="contact-links-row reveal" id="contactMapLinks"></div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Футер -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">Ru-Ka · Саратов</div>
+      <p class="footer-demo-note" id="footerDemoNote">Демонстрационная версия сайта. Не предназначена для эксплуатации.</p>
     </div>
   </footer>
 
-  <!-- Dish Detail Modal -->
-  <div id="dishModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-espresso/75 backdrop-blur-sm" role="dialog" aria-modal="true" aria-labelledby="dishModalTitle">
-    <div class="bg-parchment rounded-3xl max-w-lg w-full overflow-hidden shadow-2xl border border-espresso/15">
-      <div class="relative aspect-[16/10] bg-sand">
-        <img id="dishModalImg" src="" alt="" class="hidden w-full h-full object-cover" />
-        <div id="dishModalPlaceholder" class="hidden w-full h-full placeholder-pattern flex flex-col items-center justify-center text-center p-6">
-          <div class="w-12 h-12 rounded-full border border-saperavi/25 bg-parchment/80 flex items-center justify-center text-saperavi mb-2.5">
-            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
-              <path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/>
-            </svg>
-          </div>
-          <span class="font-display text-2xl text-espresso">Фото: НД</span>
-          <span class="text-xs text-muted mt-1">Изображение блюда пока не добавлено</span>
-        </div>
-        <button
-          id="closeDishModalBtn"
-          type="button"
-          class="absolute top-3.5 right-3.5 w-9 h-9 rounded-full bg-espresso/75 hover:bg-espresso text-parchment flex items-center justify-center transition"
-          aria-label="Закрыть окно"
-        >
-          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M18 6 6 18"/><path d="m6 6 12 12"/>
-          </svg>
-        </button>
-        <span id="dishModalRealBadge" class="hidden absolute bottom-3.5 left-3.5 px-3 py-1 rounded-full bg-espresso/80 text-amberleaf text-[11px] font-medium backdrop-blur-sm">
-          Фото ресторана
-        </span>
-      </div>
-      <div class="p-6">
-        <div class="flex items-start justify-between gap-4 mb-3">
-          <div>
-            <span id="dishModalCategory" class="text-xs uppercase tracking-widest text-clay font-semibold"></span>
-            <h3 id="dishModalTitle" class="font-display text-3xl font-semibold text-espresso mt-0.5"></h3>
-          </div>
-          <span class="px-3 py-1 rounded-full bg-sand text-espresso text-sm font-semibold shrink-0">Цена: НД</span>
-        </div>
-
-        <p id="dishModalNote" class="text-sm text-muted leading-relaxed mb-5"></p>
-
-        <div class="grid grid-cols-2 gap-3 text-xs mb-6">
-          <div class="p-3 rounded-xl bg-white border border-espresso/10">
-            <span class="block text-muted mb-0.5">Вес / Объём</span>
-            <span class="font-semibold text-espresso">НД</span>
-          </div>
-          <div class="p-3 rounded-xl bg-white border border-espresso/10">
-            <span class="block text-muted mb-0.5">Калорийность</span>
-            <span class="font-semibold text-espresso">НД</span>
-          </div>
-          <div class="p-3 rounded-xl bg-white border border-espresso/10">
-            <span class="block text-muted mb-0.5">Точный состав</span>
-            <span class="font-semibold text-espresso">НД</span>
-          </div>
-          <div class="p-3 rounded-xl bg-white border border-espresso/10">
-            <span class="block text-muted mb-0.5">Аллергены</span>
-            <span class="font-semibold text-espresso">НД</span>
-          </div>
-        </div>
-
-        <div id="dishModalActions" class="flex items-center justify-between gap-3">
-          <!-- Rendered by JS -->
-        </div>
-      </div>
+  <!-- Модальное окно демо-бронирования -->
+  <div class="modal-overlay" id="bookingModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" hidden>
+    <div class="modal-box">
+      <span class="modal-badge">Демо-версия</span>
+      <h3 class="modal-title" id="modalTitle">Демонстрационный режим</h3>
+      <p class="modal-text" id="modalText">Это демонстрационная версия сайта — реальная заявка на бронирование не отправлена.</p>
+      <div class="modal-summary" id="modalSummary"></div>
+      <button class="btn btn-primary" id="modalCloseBtn" type="button">Понятно</button>
     </div>
   </div>
 
-  <!-- Selection Drawer ("Ваш выбор") -->
-  <div id="selectionDrawer" class="hidden fixed inset-0 z-50 flex justify-end bg-espresso/65 backdrop-blur-sm" role="dialog" aria-modal="true" aria-label="Ваш выбор блюд">
-    <div id="selectionBackdrop" class="flex-1"></div>
-    <div class="w-full max-w-md bg-parchment h-full flex flex-col shadow-2xl border-l border-espresso/15">
-      <div class="p-5 border-b border-espresso/10 flex items-center justify-between">
-        <div>
-          <h3 class="font-display text-3xl font-semibold text-espresso">Ваш выбор</h3>
-          <p class="text-xs text-muted">Предварительный список блюд к визиту</p>
-        </div>
-        <button
-          id="closeSelectionBtn"
-          type="button"
-          class="w-9 h-9 rounded-full hover:bg-sand flex items-center justify-center text-espresso transition"
-          aria-label="Закрыть панель выбора"
-        >
-          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M18 6 6 18"/><path d="m6 6 12 12"/>
-          </svg>
-        </button>
-      </div>
-
-      <div id="selectionList" class="flex-1 overflow-y-auto p-5 space-y-3">
-        <!-- Rendered by JS -->
-      </div>
-
-      <div class="p-5 border-t border-espresso/10 bg-white space-y-4">
-        <div class="space-y-1.5 text-sm">
-          <div class="flex justify-between text-muted">
-            <span>Всего порций</span>
-            <span id="drawerTotalCount" class="font-semibold text-espresso">0</span>
-          </div>
-          <div class="flex justify-between text-muted">
-            <span>Ориентировочная сумма</span>
-            <span class="font-semibold text-espresso">НД</span>
-          </div>
-        </div>
-        <div class="flex gap-2.5">
-          <button
-            id="clearSelectionBtn"
-            type="button"
-            class="px-4 py-3 rounded-full border border-espresso/15 text-xs font-medium text-muted hover:text-espresso hover:bg-sand transition"
-          >
-            Очистить
-          </button>
-          <button
-            id="selectionToBookingBtn"
-            type="button"
-            class="flex-1 py-3 px-5 rounded-full bg-saperavi hover:bg-saperavi-dark text-parchment text-sm font-medium transition disabled:opacity-45 disabled:cursor-not-allowed"
-          >
-            Прикрепить к брони
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Booking Modal -->
-  <div id="bookingModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-espresso/75 backdrop-blur-sm" role="dialog" aria-modal="true" aria-labelledby="bookingModalTitle">
-    <div class="bg-parchment rounded-3xl max-w-lg w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-espresso/15 p-6 sm:p-8">
-      <div class="flex items-start justify-between gap-4 mb-5">
-        <div>
-          <span class="text-xs uppercase tracking-widest text-clay font-semibold">Ru-Ka</span>
-          <h3 id="bookingModalTitle" class="font-display text-3xl font-semibold text-espresso mt-0.5">Бронирование стола</h3>
-        </div>
-        <button
-          id="closeBookingModalBtn"
-          type="button"
-          class="w-9 h-9 rounded-full hover:bg-sand flex items-center justify-center text-espresso transition"
-          aria-label="Закрыть окно бронирования"
-        >
-          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M18 6 6 18"/><path d="m6 6 12 12"/>
-          </svg>
-        </button>
-      </div>
-
-      <form id="bookingForm" class="space-y-4">
-        <div>
-          <label for="guestName" class="block text-xs font-medium text-espresso mb-1.5">Ваше имя</label>
-          <input
-            id="guestName"
-            type="text"
-            required
-            placeholder="Например, Нино"
-            class="w-full px-4 py-2.5 rounded-xl bg-white border border-espresso/15 text-sm focus:outline-none focus:border-saperavi"
-          />
-        </div>
-
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
-          <div>
-            <label for="guestPhone" class="block text-xs font-medium text-espresso mb-1.5">Контакт для связи</label>
-            <input
-              id="guestPhone"
-              type="text"
-              required
-              placeholder="Телефон или мессенджер"
-              class="w-full px-4 py-2.5 rounded-xl bg-white border border-espresso/15 text-sm focus:outline-none focus:border-saperavi"
-            />
-          </div>
-          <div>
-            <label for="guestCount" class="block text-xs font-medium text-espresso mb-1.5">Количество гостей</label>
-            <select
-              id="guestCount"
-              class="w-full px-4 py-2.5 rounded-xl bg-white border border-espresso/15 text-sm focus:outline-none focus:border-saperavi"
-            >
-              <option value="1">1 гость</option>
-              <option value="2" selected>2 гостя</option>
-              <option value="3">3 гостя</option>
-              <option value="4">4 гостя</option>
-              <option value="5">5 гостей</option>
-              <option value="6+">6 и более гостей</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
-          <div>
-            <label for="bookingDate" class="block text-xs font-medium text-espresso mb-1.5">Дата визита</label>
-            <input
-              id="bookingDate"
-              type="date"
-              required
-              class="w-full px-4 py-2.5 rounded-xl bg-white border border-espresso/15 text-sm focus:outline-none focus:border-saperavi"
-            />
-          </div>
-          <div>
-            <label for="bookingTime" class="block text-xs font-medium text-espresso mb-1.5">Желаемое время (часы работы: НД)</label>
-            <input
-              id="bookingTime"
-              type="time"
-              required
-              value="19:00"
-              class="w-full px-4 py-2.5 rounded-xl bg-white border border-espresso/15 text-sm focus:outline-none focus:border-saperavi"
-            />
-          </div>
-        </div>
-
-        <div id="bookingSelectedDishesWrap" class="hidden p-3.5 rounded-2xl bg-sand/80 border border-espresso/10 text-xs">
-          <span class="block font-semibold text-espresso mb-1.5">Выбранные блюда из меню:</span>
-          <ul id="bookingSelectedDishesList" class="space-y-1 text-muted"></ul>
-        </div>
-
-        <div>
-          <label for="bookingComment" class="block text-xs font-medium text-espresso mb-1.5">Пожелания (необязательно)</label>
-          <textarea
-            id="bookingComment"
-            rows="2"
-            placeholder="Пожелания по столику или подаче..."
-            class="w-full px-4 py-2.5 rounded-xl bg-white border border-espresso/15 text-sm focus:outline-none focus:border-saperavi resize-none"
-          ></textarea>
-        </div>
-
-        <button
-          type="submit"
-          class="w-full py-3.5 rounded-full bg-saperavi hover:bg-saperavi-dark text-parchment text-sm font-medium transition shadow-md"
-        >
-          Отправить заявку
-        </button>
-      </form>
-
-      <div id="bookingSuccess" class="hidden text-center py-4 space-y-4">
-        <div class="w-14 h-14 mx-auto rounded-full bg-saperavi/10 text-saperavi flex items-center justify-center">
-          <svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="20 6 9 17 4 12"/>
-          </svg>
-        </div>
-        <h4 class="font-display text-3xl font-semibold text-espresso">Заявка сформирована</h4>
-        <p id="bookingSuccessSummary" class="text-sm text-muted leading-relaxed"></p>
-        <p class="text-xs text-muted bg-sand/80 rounded-xl p-3">
-          Телефон администратора и статус онлайн-подтверждения: <strong class="text-espresso">НД</strong>.
-        </p>
-        <button
-          id="bookingNewBtn"
-          type="button"
-          class="px-6 py-2.5 rounded-full bg-espresso text-parchment text-sm font-medium hover:bg-charcoal transition"
-        >
-          Готово
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Lightbox Modal -->
-  <div id="lightboxModal" class="hidden fixed inset-0 z-50 bg-espresso/95 backdrop-blur-md flex items-center justify-center p-4" role="dialog" aria-modal="true" aria-label="Просмотр фотографии">
-    <button
-      id="closeLightboxBtn"
-      type="button"
-      class="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 text-parchment flex items-center justify-center transition"
-      aria-label="Закрыть просмотр"
-    >
-      <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M18 6 6 18"/><path d="m6 6 12 12"/>
-      </svg>
-    </button>
-
-    <button
-      id="lightboxPrevBtn"
-      type="button"
-      class="absolute left-3 sm:left-6 w-11 h-11 rounded-full bg-white/10 hover:bg-white/20 text-parchment flex items-center justify-center transition"
-      aria-label="Предыдущее фото"
-    >
-      <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="m15 18-6-6 6-6"/>
-      </svg>
-    </button>
-
-    <div class="max-w-4xl w-full flex flex-col items-center">
-      <img id="lightboxImg" src="" alt="" class="max-h-[78vh] w-auto max-w-full rounded-2xl shadow-2xl object-contain" />
-      <p id="lightboxCaption" class="mt-4 font-display text-2xl text-parchment text-center"></p>
-    </div>
-
-    <button
-      id="lightboxNextBtn"
-      type="button"
-      class="absolute right-3 sm:right-6 w-11 h-11 rounded-full bg-white/10 hover:bg-white/20 text-parchment flex items-center justify-center transition"
-      aria-label="Следующее фото"
-    >
-      <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="m9 18 6-6-6-6"/>
-      </svg>
-    </button>
-  </div>
-
-  <!-- Toast Notification -->
-  <div id="toast" class="pointer-events-none fixed bottom-5 left-1/2 -translate-x-1/2 z-50 px-5 py-2.5 rounded-full bg-espresso text-parchment text-xs sm:text-sm font-medium shadow-xl border border-amberleaf/30 opacity-0 translate-y-2 transition duration-200"></div>
-
-  <script>
-    const MENU_ITEMS = [
-      {
-        id: 'khachapuri',
-        name: 'Хачапури',
-        category: 'bakery',
-        categoryLabel: 'Выпечка',
-        note: 'Блюдо грузинской кухни, приготовленное по традиционному рецепту. Подробный состав и вес: НД.',
-        price: 'НД',
-        weight: 'НД',
-        image: null,
-        isRealPhoto: false
-      },
-      {
-        id: 'khinkali',
-        name: 'Хинкали',
-        category: 'hot',
-        categoryLabel: 'Горячее',
-        note: 'Блюдо грузинской кухни, приготовленное по традиционному рецепту. Варианты начинок и вес: НД.',
-        price: 'НД',
-        weight: 'НД',
-        image: null,
-        isRealPhoto: false
-      },
-      {
-        id: 'chashushuli',
-        name: 'Чашушули',
-        category: 'hot',
-        categoryLabel: 'Горячее',
-        note: 'Блюдо грузинской кухни, приготовленное по традиционному рецепту. Подробный состав и вес: НД.',
-        price: 'НД',
-        weight: 'НД',
-        image: 'images/3.webp',
-        isRealPhoto: true
-      },
-      {
-        id: 'lavash',
-        name: 'Лаваш',
-        category: 'bakery',
-        categoryLabel: 'Выпечка',
-        note: 'Традиционная грузинская выпечка. Подробный состав и вес: НД.',
-        price: 'НД',
-        weight: 'НД',
-        image: null,
-        isRealPhoto: false
-      },
-      {
-        id: 'lobio',
-        name: 'Лобио',
-        category: 'hot',
-        categoryLabel: 'Горячее',
-        note: 'Блюдо грузинской кухни, приготовленное по традиционному рецепту. Подробный состав и вес: НД.',
-        price: 'НД',
-        weight: 'НД',
-        image: null,
-        isRealPhoto: false
-      },
-      {
-        id: 'kharcho',
-        name: 'Харчо',
-        category: 'soups',
-        categoryLabel: 'Супы',
-        note: 'Традиционный грузинский суп. Подробный состав и объём порции: НД.',
-        price: 'НД',
-        weight: 'НД',
-        image: null,
-        isRealPhoto: false
-      },
-      {
-        id: 'wine',
-        name: 'Домашнее вино',
-        category: 'drinks',
-        categoryLabel: 'Напитки',
-        note: 'Домашнее вино, представленное в ресторане Ru-Ka. Сорт, крепость и объём: НД.',
-        price: 'НД',
-        weight: 'НД',
-        image: null,
-        isRealPhoto: false
-      },
-      {
-        id: 'matsoni',
-        name: 'Мацони',
-        category: 'drinks',
-        categoryLabel: 'Напитки',
-        note: 'Традиционный грузинский кисломолочный напиток. Объём и добавки: НД.',
-        price: 'НД',
-        weight: 'НД',
-        image: null,
-        isRealPhoto: false
-      }
-    ];
-
-    const CATEGORIES = [
-      { id: 'all', label: 'Все' },
-      { id: 'bakery', label: 'Выпечка' },
-      { id: 'hot', label: 'Горячее' },
-      { id: 'soups', label: 'Супы' },
-      { id: 'drinks', label: 'Напитки' },
-      { id: 'favorites', label: 'Избранное' }
-    ];
-
-    const GALLERY_ITEMS = [
-      {
-        src: 'images/1.webp',
-        caption: 'Интерьер зала ресторана Ru-Ka'
-      },
-      {
-        src: 'images/3.webp',
-        caption: 'Чашушули — подача в Ru-Ka'
-      },
-      {
-        src: 'images/2.webp',
-        caption: 'Подача десерта · Название и цена: НД'
-      }
-    ];
-
-    function renderPlaceholderCard(item) {
-      return `
-        <div
-          data-open-dish="${item.id}"
-          class="w-full h-full placeholder-pattern flex flex-col items-center justify-center text-center p-6 cursor-pointer group"
-        >
-          <div class="w-12 h-12 rounded-full border border-saperavi/25 bg-parchment/85 flex items-center justify-center text-saperavi mb-2.5 group-hover:scale-105 transition">
-            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/>
-              <path d="M7 2v20"/>
-              <path d="M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/>
-            </svg>
-          </div>
-          <span class="font-display text-2xl font-semibold text-espresso">${item.name}</span>
-          <span class="text-[11px] uppercase tracking-[0.2em] text-muted mt-1">Фото: НД</span>
-        </div>
-      `;
-    }
-
-    function renderThumbSmall(item) {
-      if (item.image) {
-        return `<img src="${item.image}" alt="${item.name}" data-open-dish="${item.id}" class="w-16 h-16 sm:w-20 sm:h-16 rounded-xl object-cover shrink-0 cursor-pointer bg-sand" />`;
-      }
-      return `
-        <div data-open-dish="${item.id}" class="w-16 h-16 sm:w-20 sm:h-16 rounded-xl placeholder-pattern border border-espresso/10 shrink-0 cursor-pointer flex flex-col items-center justify-center text-center">
-          <span class="text-[10px] font-semibold uppercase tracking-widest text-saperavi">НД</span>
-          <span class="text-[9px] text-muted">фото</span>
-        </div>
-      `;
-    }
-
-    function renderDrawerThumb(item) {
-      if (item.image) {
-        return `<img src="${item.image}" alt="${item.name}" class="w-14 h-14 rounded-xl object-cover shrink-0 bg-sand" />`;
-      }
-      return `
-        <div class="w-14 h-14 rounded-xl placeholder-pattern border border-espresso/10 shrink-0 flex flex-col items-center justify-center">
-          <span class="text-[10px] font-semibold text-saperavi">НД</span>
-        </div>
-      `;
-    }
-
-    function loadSavedFavorites() {
-      try {
-        const raw = localStorage.getItem('ruka_favorites_v1');
-        if (raw) return new Set(JSON.parse(raw));
-      } catch (e) {}
-      return new Set();
-    }
-
-    function saveFavorites(set) {
-      try {
-        localStorage.setItem('ruka_favorites_v1', JSON.stringify(Array.from(set)));
-      } catch (e) {}
-    }
-
-    const state = {
-      activeCategory: 'all',
-      searchQuery: '',
-      viewMode: 'grid',
-      favorites: loadSavedFavorites(),
-      selection: {},
-      selectedDishId: null,
-      lightboxIndex: null
-    };
-
-    const el = {
-      categoryTabs: document.getElementById('categoryTabs'),
-      menuContainer: document.getElementById('menuContainer'),
-      menuEmptyState: document.getElementById('menuEmptyState'),
-      menuSearchInput: document.getElementById('menuSearchInput'),
-      clearSearchBtn: document.getElementById('clearSearchBtn'),
-      resetFiltersBtn: document.getElementById('resetFiltersBtn'),
-      viewGridBtn: document.getElementById('viewGridBtn'),
-      viewListBtn: document.getElementById('viewListBtn'),
-      headerCartBadge: document.getElementById('headerCartBadge'),
-      openSelectionBtn: document.getElementById('openSelectionBtn'),
-      openSelectionFromNoteBtn: document.getElementById('openSelectionFromNoteBtn'),
-      selectionDrawer: document.getElementById('selectionDrawer'),
-      selectionBackdrop: document.getElementById('selectionBackdrop'),
-      closeSelectionBtn: document.getElementById('closeSelectionBtn'),
-      selectionList: document.getElementById('selectionList'),
-      drawerTotalCount: document.getElementById('drawerTotalCount'),
-      clearSelectionBtn: document.getElementById('clearSelectionBtn'),
-      selectionToBookingBtn: document.getElementById('selectionToBookingBtn'),
-      dishModal: document.getElementById('dishModal'),
-      dishModalImg: document.getElementById('dishModalImg'),
-      dishModalPlaceholder: document.getElementById('dishModalPlaceholder'),
-      dishModalRealBadge: document.getElementById('dishModalRealBadge'),
-      dishModalCategory: document.getElementById('dishModalCategory'),
-      dishModalTitle: document.getElementById('dishModalTitle'),
-      dishModalNote: document.getElementById('dishModalNote'),
-      dishModalActions: document.getElementById('dishModalActions'),
-      closeDishModalBtn: document.getElementById('closeDishModalBtn'),
-      bookingModal: document.getElementById('bookingModal'),
-      openBookingBtn: document.getElementById('openBookingBtn'),
-      mobileBookingBtn: document.getElementById('mobileBookingBtn'),
-      heroBookingBtn: document.getElementById('heroBookingBtn'),
-      contactsBookingBtn: document.getElementById('contactsBookingBtn'),
-      closeBookingModalBtn: document.getElementById('closeBookingModalBtn'),
-      bookingForm: document.getElementById('bookingForm'),
-      bookingSuccess: document.getElementById('bookingSuccess'),
-      bookingSuccessSummary: document.getElementById('bookingSuccessSummary'),
-      bookingNewBtn: document.getElementById('bookingNewBtn'),
-      bookingSelectedDishesWrap: document.getElementById('bookingSelectedDishesWrap'),
-      bookingSelectedDishesList: document.getElementById('bookingSelectedDishesList'),
-      bookingDate: document.getElementById('bookingDate'),
-      mobileMenuBtn: document.getElementById('mobileMenuBtn'),
-      mobileNav: document.getElementById('mobileNav'),
-      lightboxModal: document.getElementById('lightboxModal'),
-      lightboxImg: document.getElementById('lightboxImg'),
-      lightboxCaption: document.getElementById('lightboxCaption'),
-      closeLightboxBtn: document.getElementById('closeLightboxBtn'),
-      lightboxPrevBtn: document.getElementById('lightboxPrevBtn'),
-      lightboxNextBtn: document.getElementById('lightboxNextBtn'),
-      toast: document.getElementById('toast')
-    };
-
-    let toastTimer = null;
-    function showToast(message) {
-      el.toast.textContent = message;
-      el.toast.classList.remove('opacity-0', 'translate-y-2');
-      el.toast.classList.add('opacity-100', 'translate-y-0');
-      if (toastTimer) clearTimeout(toastTimer);
-      toastTimer = setTimeout(() => {
-        el.toast.classList.add('opacity-0', 'translate-y-2');
-        el.toast.classList.remove('opacity-100', 'translate-y-0');
-      }, 2200);
-    }
-
-    function getTotalSelectedCount() {
-      return Object.values(state.selection).reduce((sum, n) => sum + n, 0);
-    }
-
-    function getCategoryCount(catId) {
-      if (catId === 'all') return MENU_ITEMS.length;
-      if (catId === 'favorites') return state.favorites.size;
-      return MENU_ITEMS.filter((item) => item.category === catId).length;
-    }
-
-    function getFilteredItems() {
-      const q = state.searchQuery.trim().toLowerCase();
-      return MENU_ITEMS.filter((item) => {
-        const matchesCat =
-          state.activeCategory === 'all' ||
-          (state.activeCategory === 'favorites' ? state.favorites.has(item.id) : item.category === state.activeCategory);
-        const matchesQuery =
-          !q ||
-          item.name.toLowerCase().includes(q) ||
-          item.categoryLabel.toLowerCase().includes(q);
-        return matchesCat && matchesQuery;
-      });
-    }
-
-    function renderCategoryTabs() {
-      el.categoryTabs.innerHTML = CATEGORIES.map((cat) => {
-        const isActive = state.activeCategory === cat.id;
-        const count = getCategoryCount(cat.id);
-        return `
-          <button
-            type="button"
-            role="tab"
-            aria-selected="${isActive}"
-            data-category="${cat.id}"
-            class="shrink-0 inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs sm:text-sm font-medium transition border ${
-              isActive
-                ? 'bg-saperavi text-parchment border-saperavi shadow-sm'
-                : 'bg-white text-charcoal border-espresso/12 hover:border-saperavi/50 hover:text-saperavi'
-            }"
-          >
-            <span>${cat.label}</span>
-            <span class="text-[11px] px-1.5 py-0.5 rounded-full ${
-              isActive ? 'bg-white/20 text-parchment' : 'bg-sand text-muted'
-            }">${count}</span>
-          </button>
-        `;
-      }).join('');
-    }
-
-    function renderMenu() {
-      const items = getFilteredItems();
-
-      if (items.length === 0) {
-        el.menuContainer.classList.add('hidden');
-        el.menuEmptyState.classList.remove('hidden');
-        return;
-      }
-
-      el.menuEmptyState.classList.add('hidden');
-      el.menuContainer.classList.remove('hidden');
-
-      if (state.viewMode === 'grid') {
-        el.menuContainer.className = 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6';
-        el.menuContainer.innerHTML = items.map((item) => {
-          const qty = state.selection[item.id] || 0;
-          const isFav = state.favorites.has(item.id);
-          const mediaHtml = item.image
-            ? `<img src="${item.image}" alt="${item.name}" class="w-full h-full object-cover cursor-pointer hover:scale-[1.03] transition duration-500" data-open-dish="${item.id}" />`
-            : renderPlaceholderCard(item);
-          return `
-            <article class="card-lift bg-white rounded-3xl overflow-hidden border border-espresso/10 flex flex-col">
-              <div class="relative aspect-[4/3] bg-sand overflow-hidden">
-                ${mediaHtml}
-                <button
-                  type="button"
-                  data-toggle-fav="${item.id}"
-                  aria-label="${isFav ? 'Убрать из избранного' : 'Добавить в избранное'}"
-                  class="absolute top-3 right-3 w-9 h-9 rounded-full backdrop-blur-md flex items-center justify-center transition ${
-                    isFav ? 'bg-saperavi text-parchment' : 'bg-espresso/55 text-parchment hover:bg-espresso/80'
-                  }"
-                >
-                  <svg class="w-4 h-4" viewBox="0 0 24 24" fill="${isFav ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>
-                  </svg>
-                </button>
-                <div class="absolute bottom-3 left-3 flex items-center gap-1.5">
-                  <span class="px-2.5 py-1 rounded-full bg-espresso/75 text-parchment text-[11px] font-medium backdrop-blur-sm">
-                    ${item.categoryLabel}
-                  </span>
-                  ${item.isRealPhoto ? `<span class="px-2.5 py-1 rounded-full bg-amberleaf/90 text-espresso text-[11px] font-semibold">Фото ресторана</span>` : ''}
-                </div>
-              </div>
-
-              <div class="p-5 flex-1 flex flex-col justify-between">
-                <div>
-                  <div class="flex items-baseline justify-between gap-3 mb-2">
-                    <h3 class="font-display text-2xl font-semibold text-espresso cursor-pointer hover:text-saperavi transition" data-open-dish="${item.id}">
-                      ${item.name}
-                    </h3>
-                    <span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-sand text-espresso shrink-0">
-                      ${item.price}
-                    </span>
-                  </div>
-                  <p class="text-xs text-muted leading-relaxed mb-4">
-                    Вес / объём: <span class="text-espresso font-medium">${item.weight}</span> · Состав: <span class="text-espresso font-medium">НД</span>
-                  </p>
-                </div>
-
-                <div class="flex items-center justify-between gap-2 pt-3 border-t border-espresso/8">
-                  <button
-                    type="button"
-                    data-open-dish="${item.id}"
-                    class="text-xs font-medium text-muted hover:text-saperavi transition"
-                  >
-                    Подробнее
-                  </button>
-
-                  ${
-                    qty === 0
-                      ? `<button
-                          type="button"
-                          data-inc-dish="${item.id}"
-                          class="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-espresso hover:bg-saperavi text-parchment text-xs font-medium transition"
-                        >
-                          <span>+ В выбор</span>
-                        </button>`
-                      : `<div class="inline-flex items-center gap-1 bg-sand rounded-full p-1 border border-espresso/10">
-                          <button type="button" data-dec-dish="${item.id}" class="w-7 h-7 rounded-full bg-white hover:bg-saperavi hover:text-parchment text-espresso text-sm font-semibold transition flex items-center justify-center" aria-label="Уменьшить количество">-</button>
-                          <span class="w-7 text-center text-xs font-semibold text-espresso">${qty}</span>
-                          <button type="button" data-inc-dish="${item.id}" class="w-7 h-7 rounded-full bg-white hover:bg-saperavi hover:text-parchment text-espresso text-sm font-semibold transition flex items-center justify-center" aria-label="Увеличить количество">+</button>
-                        </div>`
-                  }
-                </div>
-              </div>
-            </article>
-          `;
-        }).join('');
-      } else {
-        el.menuContainer.className = 'space-y-3';
-        el.menuContainer.innerHTML = items.map((item) => {
-          const qty = state.selection[item.id] || 0;
-          const isFav = state.favorites.has(item.id);
-          return `
-            <article class="bg-white rounded-2xl p-3.5 sm:p-4 border border-espresso/10 flex flex-col sm:flex-row sm:items-center justify-between gap-4 hover:border-saperavi/35 transition">
-              <div class="flex items-center gap-4 min-w-0">
-                ${renderThumbSmall(item)}
-                <div class="min-w-0">
-                  <div class="flex flex-wrap items-center gap-2">
-                    <h3 class="font-display text-2xl font-semibold text-espresso cursor-pointer hover:text-saperavi transition" data-open-dish="${item.id}">
-                      ${item.name}
-                    </h3>
-                    <span class="text-[11px] px-2 py-0.5 rounded-full bg-sand text-muted">${item.categoryLabel}</span>
-                    ${item.isRealPhoto ? `<span class="text-[11px] px-2 py-0.5 rounded-full bg-amberleaf/25 text-espresso font-medium">Фото ресторана</span>` : ''}
-                  </div>
-                  <p class="text-xs text-muted mt-1">
-                    Цена: <strong class="text-espresso">${item.price}</strong> · Вес/объём: <strong class="text-espresso">${item.weight}</strong> · Состав: <strong class="text-espresso">НД</strong>
-                  </p>
-                </div>
-              </div>
-
-              <div class="flex items-center justify-end gap-2.5 shrink-0">
-                <button
-                  type="button"
-                  data-toggle-fav="${item.id}"
-                  aria-label="${isFav ? 'Убрать из избранного' : 'Добавить в избранное'}"
-                  class="w-9 h-9 rounded-full border flex items-center justify-center transition ${
-                    isFav ? 'bg-saperavi border-saperavi text-parchment' : 'border-espresso/15 text-muted hover:text-saperavi'
-                  }"
-                >
-                  <svg class="w-4 h-4" viewBox="0 0 24 24" fill="${isFav ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2">
-                    <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>
-                  </svg>
-                </button>
-                <button
-                  type="button"
-                  data-open-dish="${item.id}"
-                  class="px-3 py-2 rounded-full border border-espresso/15 text-xs font-medium text-charcoal hover:border-saperavi hover:text-saperavi transition"
-                >
-                  Детали
-                </button>
-                ${
-                  qty === 0
-                    ? `<button type="button" data-inc-dish="${item.id}" class="px-4 py-2 rounded-full bg-espresso hover:bg-saperavi text-parchment text-xs font-medium transition">+ В выбор</button>`
-                    : `<div class="inline-flex items-center gap-1 bg-sand rounded-full p-1 border border-espresso/10">
-                        <button type="button" data-dec-dish="${item.id}" class="w-7 h-7 rounded-full bg-white hover:bg-saperavi hover:text-parchment text-espresso text-sm font-semibold transition flex items-center justify-center">-</button>
-                        <span class="w-7 text-center text-xs font-semibold text-espresso">${qty}</span>
-                        <button type="button" data-inc-dish="${item.id}" class="w-7 h-7 rounded-full bg-white hover:bg-saperavi hover:text-parchment text-espresso text-sm font-semibold transition flex items-center justify-center">+</button>
-                      </div>`
-                }
-              </div>
-            </article>
-          `;
-        }).join('');
-      }
-    }
-
-    function renderSelectionDrawer() {
-      const totalCount = getTotalSelectedCount();
-      el.headerCartBadge.textContent = String(totalCount);
-      el.drawerTotalCount.textContent = String(totalCount);
-      el.selectionToBookingBtn.disabled = totalCount === 0;
-
-      const entries = Object.entries(state.selection).filter(([, qty]) => qty > 0);
-      if (entries.length === 0) {
-        el.selectionList.innerHTML = `
-          <div class="h-full flex flex-col items-center justify-center text-center py-12 px-4">
-            <div class="w-12 h-12 rounded-full bg-sand flex items-center justify-center text-muted mb-3">
-              <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-                <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/>
-                <path d="M3 6h18"/>
-                <path d="M16 10a4 4 0 0 1-8 0"/>
-              </svg>
-            </div>
-            <p class="font-display text-2xl text-espresso mb-1">Список пока пуст</p>
-            <p class="text-xs text-muted max-w-xs">Добавляйте блюда из меню, чтобы сохранить свой выбор или прикрепить его к бронированию стола.</p>
-          </div>
-        `;
-        return;
-      }
-
-      el.selectionList.innerHTML = entries.map(([id, qty]) => {
-        const item = MENU_ITEMS.find((m) => m.id === id);
-        if (!item) return '';
-        return `
-          <div class="p-3 rounded-2xl bg-white border border-espresso/10 flex items-center gap-3">
-            ${renderDrawerThumb(item)}
-            <div class="flex-1 min-w-0">
-              <p class="font-display text-xl font-semibold text-espresso leading-tight truncate">${item.name}</p>
-              <p class="text-xs text-muted mt-0.5">Цена: НД · ${item.categoryLabel}</p>
-            </div>
-            <div class="inline-flex items-center gap-1 bg-sand rounded-full p-1">
-              <button type="button" data-dec-dish="${item.id}" class="w-6 h-6 rounded-full bg-white hover:bg-saperavi hover:text-parchment text-espresso text-xs font-semibold flex items-center justify-center transition">-</button>
-              <span class="w-6 text-center text-xs font-semibold text-espresso">${qty}</span>
-              <button type="button" data-inc-dish="${item.id}" class="w-6 h-6 rounded-full bg-white hover:bg-saperavi hover:text-parchment text-espresso text-xs font-semibold flex items-center justify-center transition">+</button>
-            </div>
-          </div>
-        `;
-      }).join('');
-    }
-
-    function renderDishModal() {
-      if (!state.selectedDishId) {
-        el.dishModal.classList.add('hidden');
-        return;
-      }
-      const item = MENU_ITEMS.find((m) => m.id === state.selectedDishId);
-      if (!item) return;
-
-      if (item.image) {
-        el.dishModalImg.src = item.image;
-        el.dishModalImg.alt = item.name;
-        el.dishModalImg.classList.remove('hidden');
-        el.dishModalPlaceholder.classList.add('hidden');
-      } else {
-        el.dishModalImg.classList.add('hidden');
-        el.dishModalPlaceholder.classList.remove('hidden');
-      }
-
-      el.dishModalCategory.textContent = item.categoryLabel;
-      el.dishModalTitle.textContent = item.name;
-      el.dishModalNote.textContent = item.note;
-      el.dishModalRealBadge.classList.toggle('hidden', !item.isRealPhoto);
-
-      const qty = state.selection[item.id] || 0;
-      const isFav = state.favorites.has(item.id);
-      el.dishModalActions.innerHTML = `
-        <button
-          type="button"
-          data-toggle-fav="${item.id}"
-          class="inline-flex items-center gap-2 px-4 py-2.5 rounded-full border text-xs font-medium transition ${
-            isFav ? 'bg-saperavi/10 border-saperavi text-saperavi' : 'border-espresso/15 text-charcoal hover:border-saperavi'
-          }"
-        >
-          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="${isFav ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2">
-            <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>
-          </svg>
-          <span>${isFav ? 'В избранном' : 'В избранное'}</span>
-        </button>
-
-        ${
-          qty === 0
-            ? `<button type="button" data-inc-dish="${item.id}" class="flex-1 py-2.5 px-5 rounded-full bg-saperavi hover:bg-saperavi-dark text-parchment text-sm font-medium transition">Добавить в выбор</button>`
-            : `<div class="inline-flex items-center gap-2 bg-sand rounded-full p-1 border border-espresso/10">
-                <button type="button" data-dec-dish="${item.id}" class="w-8 h-8 rounded-full bg-white hover:bg-saperavi hover:text-parchment text-espresso font-semibold flex items-center justify-center transition">-</button>
-                <span class="w-8 text-center text-sm font-semibold text-espresso">${qty}</span>
-                <button type="button" data-inc-dish="${item.id}" class="w-8 h-8 rounded-full bg-white hover:bg-saperavi hover:text-parchment text-espresso font-semibold flex items-center justify-center transition">+</button>
-              </div>`
-        }
-      `;
-      el.dishModal.classList.remove('hidden');
-    }
-
-    function updateAllViews() {
-      renderCategoryTabs();
-      renderMenu();
-      renderSelectionDrawer();
-      if (state.selectedDishId) renderDishModal();
-    }
-
-    function incrementDish(id) {
-      state.selection[id] = (state.selection[id] || 0) + 1;
-      const item = MENU_ITEMS.find((m) => m.id === id);
-      if (item && state.selection[id] === 1) {
-        showToast(`«${item.name}» добавлено в ваш выбор`);
-      }
-      updateAllViews();
-    }
-
-    function decrementDish(id) {
-      if (!state.selection[id]) return;
-      state.selection[id] -= 1;
-      if (state.selection[id] <= 0) {
-        delete state.selection[id];
-      }
-      updateAllViews();
-    }
-
-    function toggleFavorite(id) {
-      const item = MENU_ITEMS.find((m) => m.id === id);
-      if (state.favorites.has(id)) {
-        state.favorites.delete(id);
-        if (item) showToast(`«${item.name}» убрано из избранного`);
-      } else {
-        state.favorites.add(id);
-        if (item) showToast(`«${item.name}» добавлено в избранное`);
-      }
-      saveFavorites(state.favorites);
-      updateAllViews();
-    }
-
-    function openBookingModal() {
-      el.bookingForm.classList.remove('hidden');
-      el.bookingSuccess.classList.add('hidden');
-      const entries = Object.entries(state.selection).filter(([, qty]) => qty > 0);
-      if (entries.length > 0) {
-        el.bookingSelectedDishesWrap.classList.remove('hidden');
-        el.bookingSelectedDishesList.innerHTML = entries.map(([id, qty]) => {
-          const item = MENU_ITEMS.find((m) => m.id === id);
-          return `<li>• ${item ? item.name : id} × ${qty} (цена: НД)</li>`;
-        }).join('');
-      } else {
-        el.bookingSelectedDishesWrap.classList.add('hidden');
-      }
-      el.bookingModal.classList.remove('hidden');
-    }
-
-    function openLightbox(index) {
-      state.lightboxIndex = (index + GALLERY_ITEMS.length) % GALLERY_ITEMS.length;
-      const current = GALLERY_ITEMS[state.lightboxIndex];
-      el.lightboxImg.src = current.src;
-      el.lightboxImg.alt = current.caption;
-      el.lightboxCaption.textContent = current.caption;
-      el.lightboxModal.classList.remove('hidden');
-    }
-
-    function closeLightbox() {
-      state.lightboxIndex = null;
-      el.lightboxModal.classList.add('hidden');
-    }
-
-    const todayStr = new Date().toISOString().split('T')[0];
-    el.bookingDate.value = todayStr;
-    el.bookingDate.min = todayStr;
-
-    el.categoryTabs.addEventListener('click', (e) => {
-      const btn = e.target.closest('[data-category]');
-      if (!btn) return;
-      state.activeCategory = btn.getAttribute('data-category');
-      updateAllViews();
-    });
-
-    function handleDishActionClick(e) {
-      const favBtn = e.target.closest('[data-toggle-fav]');
-      if (favBtn) {
-        toggleFavorite(favBtn.getAttribute('data-toggle-fav'));
-        return;
-      }
-      const incBtn = e.target.closest('[data-inc-dish]');
-      if (incBtn) {
-        incrementDish(incBtn.getAttribute('data-inc-dish'));
-        return;
-      }
-      const decBtn = e.target.closest('[data-dec-dish]');
-      if (decBtn) {
-        decrementDish(decBtn.getAttribute('data-dec-dish'));
-        return;
-      }
-      const openBtn = e.target.closest('[data-open-dish]');
-      if (openBtn) {
-        state.selectedDishId = openBtn.getAttribute('data-open-dish');
-        renderDishModal();
-      }
-    }
-
-    el.menuContainer.addEventListener('click', handleDishActionClick);
-    el.selectionList.addEventListener('click', handleDishActionClick);
-    el.dishModalActions.addEventListener('click', handleDishActionClick);
-
-    el.menuSearchInput.addEventListener('input', (e) => {
-      state.searchQuery = e.target.value;
-      el.clearSearchBtn.classList.toggle('hidden', state.searchQuery.length === 0);
-      el.clearSearchBtn.classList.toggle('flex', state.searchQuery.length > 0);
-      renderMenu();
-    });
-
-    el.clearSearchBtn.addEventListener('click', () => {
-      state.searchQuery = '';
-      el.menuSearchInput.value = '';
-      el.clearSearchBtn.classList.add('hidden');
-      el.clearSearchBtn.classList.remove('flex');
-      renderMenu();
-    });
-
-    el.resetFiltersBtn.addEventListener('click', () => {
-      state.activeCategory = 'all';
-      state.searchQuery = '';
-      el.menuSearchInput.value = '';
-      el.clearSearchBtn.classList.add('hidden');
-      el.clearSearchBtn.classList.remove('flex');
-      updateAllViews();
-    });
-
-    function setViewMode(mode) {
-      state.viewMode = mode;
-      const isGrid = mode === 'grid';
-      el.viewGridBtn.className = `inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-medium transition ${
-        isGrid ? 'bg-espresso text-parchment' : 'text-muted hover:text-espresso'
-      }`;
-      el.viewListBtn.className = `inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-medium transition ${
-        !isGrid ? 'bg-espresso text-parchment' : 'text-muted hover:text-espresso'
-      }`;
-      renderMenu();
-    }
-
-    el.viewGridBtn.addEventListener('click', () => setViewMode('grid'));
-    el.viewListBtn.addEventListener('click', () => setViewMode('list'));
-
-    function openSelectionDrawer() {
-      el.selectionDrawer.classList.remove('hidden');
-    }
-    function closeSelectionDrawer() {
-      el.selectionDrawer.classList.add('hidden');
-    }
-
-    el.openSelectionBtn.addEventListener('click', openSelectionDrawer);
-    el.openSelectionFromNoteBtn.addEventListener('click', openSelectionDrawer);
-    el.closeSelectionBtn.addEventListener('click', closeSelectionDrawer);
-    el.selectionBackdrop.addEventListener('click', closeSelectionDrawer);
-
-    el.clearSelectionBtn.addEventListener('click', () => {
-      if (getTotalSelectedCount() === 0) return;
-      state.selection = {};
-      updateAllViews();
-      showToast('Выбор блюд очищен');
-    });
-
-    el.selectionToBookingBtn.addEventListener('click', () => {
-      closeSelectionDrawer();
-      openBookingModal();
-    });
-
-    el.closeDishModalBtn.addEventListener('click', () => {
-      state.selectedDishId = null;
-      el.dishModal.classList.add('hidden');
-    });
-    el.dishModal.addEventListener('click', (e) => {
-      if (e.target === el.dishModal) {
-        state.selectedDishId = null;
-        el.dishModal.classList.add('hidden');
-      }
-    });
-
-    [el.openBookingBtn, el.mobileBookingBtn, el.heroBookingBtn, el.contactsBookingBtn].forEach((btn) => {
-      btn.addEventListener('click', () => {
-        el.mobileNav.classList.add('hidden');
-        openBookingModal();
-      });
-    });
-
-    el.closeBookingModalBtn.addEventListener('click', () => {
-      el.bookingModal.classList.add('hidden');
-    });
-    el.bookingModal.addEventListener('click', (e) => {
-      if (e.target === el.bookingModal) el.bookingModal.classList.add('hidden');
-    });
-
-    el.bookingForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const name = document.getElementById('guestName').value.trim();
-      const guests = document.getElementById('guestCount').value;
-      const date = el.bookingDate.value;
-      const time = document.getElementById('bookingTime').value;
-      const count = getTotalSelectedCount();
-      const dishesPart = count > 0 ? ` К заявке прикреплено позиций из меню: ${count}.` : '';
-      el.bookingSuccessSummary.textContent = `${name}, ваша заявка на ${guests} гост. (${date} в ${time}) сохранена.${dishesPart}`;
-      el.bookingForm.classList.add('hidden');
-      el.bookingSuccess.classList.remove('hidden');
-      showToast('Заявка на бронирование сформирована');
-    });
-
-    el.bookingNewBtn.addEventListener('click', () => {
-      el.bookingModal.classList.add('hidden');
-      el.bookingForm.reset();
-      el.bookingDate.value = todayStr;
-    });
-
-    el.mobileMenuBtn.addEventListener('click', () => {
-      el.mobileNav.classList.toggle('hidden');
-    });
-    document.querySelectorAll('.mobile-nav-link').forEach((link) => {
-      link.addEventListener('click', () => el.mobileNav.classList.add('hidden'));
-    });
-
-    document.querySelectorAll('.gallery-trigger').forEach((btn) => {
-      btn.addEventListener('click', () => {
-        openLightbox(Number(btn.getAttribute('data-lightbox-index')));
-      });
-    });
-    el.closeLightboxBtn.addEventListener('click', closeLightbox);
-    el.lightboxPrevBtn.addEventListener('click', () => openLightbox(state.lightboxIndex - 1));
-    el.lightboxNextBtn.addEventListener('click', () => openLightbox(state.lightboxIndex + 1));
-    el.lightboxModal.addEventListener('click', (e) => {
-      if (e.target === el.lightboxModal) closeLightbox();
-    });
-
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
-        if (state.lightboxIndex !== null) closeLightbox();
-        if (state.selectedDishId) {
-          state.selectedDishId = null;
-          el.dishModal.classList.add('hidden');
-        }
-        el.selectionDrawer.classList.add('hidden');
-        el.bookingModal.classList.add('hidden');
-      } else if (state.lightboxIndex !== null) {
-        if (e.key === 'ArrowLeft') openLightbox(state.lightboxIndex - 1);
-        if (e.key === 'ArrowRight') openLightbox(state.lightboxIndex + 1);
-      }
-    });
-
-    updateAllViews();
-  </script>
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
 </body>
 </html>
